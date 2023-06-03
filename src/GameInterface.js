@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Heading, Input, List, ListItem, Grid } from '@chakra-ui/react';
 
-const GameInterface = ({ gameOver, winnerNames, highscore, revealedWord, playerName, setPlayerName, handleJoinGame, handleLeaveGame, handleGuessLetter, players, selectedPlayer, setSelectedPlayer, turnId }) => {
+const GameInterface = ({ gameOver, winners, highscore, revealedWord, playerName, setPlayerName, handleJoinGame, handleLeaveGame, handleGuessLetter, players, selectedPlayer, setSelectedPlayer, turnId }) => {
   return (
     <Box>
       <Heading as="h1" mb={4} color="brand.900">
@@ -20,6 +20,7 @@ const GameInterface = ({ gameOver, winnerNames, highscore, revealedWord, playerN
         onChange={e => setPlayerName(e.target.value)}
         mb={4}
         colorScheme="brand"
+        disabled={gameOver} // Disable input during game over
       />
       <Button
         colorScheme="brand"
@@ -27,6 +28,7 @@ const GameInterface = ({ gameOver, winnerNames, highscore, revealedWord, playerN
         mb={4}
         _hover={{ transform: 'scale(1.05)' }}
         transition="all 0.2s"
+        disabled={gameOver} // Disable button during game over
       >
         Join Game
       </Button>
@@ -37,7 +39,7 @@ const GameInterface = ({ gameOver, winnerNames, highscore, revealedWord, playerN
         mb={4}
         _hover={{ transform: 'scale(1.05)' }}
         transition="all 0.2s"
-        isDisabled={!selectedPlayer} // Disable the button if no player is selected
+        isDisabled={!selectedPlayer || gameOver} // Disable the button if no player is selected or during game over
       >
         Remove Player
       </Button>
@@ -91,6 +93,7 @@ const GameInterface = ({ gameOver, winnerNames, highscore, revealedWord, playerN
           'X',
           'Y',
           'Z',
+          '_', // Blank space
         ].map(letter => (
           <Button
             colorScheme="brand"
@@ -98,11 +101,30 @@ const GameInterface = ({ gameOver, winnerNames, highscore, revealedWord, playerN
             key={letter}
             _hover={{ transform: 'scale(1.05) rotate(3deg)' }}
             transition="all 0.2s"
+            disabled={gameOver} // Disable button during game over
           >
             {letter}
           </Button>
         ))}
       </Grid>
+      {gameOver && (
+        <Box mt={4}>
+          <Heading as="h3" mb={2} color="brand.700">
+            Game Over!
+          </Heading>
+          <Heading as="h4" mb={2} color="brand.700">
+            Winners:
+          </Heading>
+          <List>
+            {winners.map(winner => (
+              <ListItem key={winner.id}>{winner.name} - {winner.score}</ListItem>
+            ))}
+          </List>
+          <Heading as="h4" mb={2} color="brand.700">
+            Highscore: {highscore}
+          </Heading>
+        </Box>
+      )}
     </Box>
   );
 };
