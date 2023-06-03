@@ -1,12 +1,14 @@
 import React from 'react';
 import Game from './Main';
+import './index.css';
+import theme from './theme';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const App = () => {
   return (
-    <div>
-      <h1>Word Guessing Game</h1>
+    <ChakraProvider theme={theme}>
       <Game />
-    </div>
+    </ChakraProvider>
   );
 };
 
