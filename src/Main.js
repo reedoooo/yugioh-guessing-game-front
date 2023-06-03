@@ -2,23 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Center, Grid, VStack } from '@chakra-ui/react';
 import { io } from 'socket.io-client';
 import GameInterface from './GameInterface';
-import GameOver from './GameOver';
 import PlayerScores from './PlayerScores';
-
+import GameOver from './GameOver';
 import '@fontsource/inter';
 import './button.css';
 
+
 const eventPool = {
-    PLAYER_JOIN: 'playerJoin',
-    GAME_START: 'gameStart',
-    UPDATE_PLAYER: 'updatePlayer',
-    PLAYER_GUESS: 'playerGuess',
-    PLAYER_SCORE: 'playerScore',
-    PLAYER_TURN: 'playerTurn',
-    GAME_OVER: 'gameOver',
-    PLAYER_LEAVE: 'playerLeave',
-  };
-  
+  PLAYER_JOIN: 'playerJoin',
+  GAME_START: 'gameStart',
+  UPDATE_PLAYER: 'updatePlayer',
+  PLAYER_GUESS: 'playerGuess',
+  PLAYER_SCORE: 'playerScore',
+  PLAYER_TURN: 'playerTurn',
+  GAME_OVER: 'gameOver',
+  PLAYER_LEAVE: 'playerLeave',
+};
 
 const Game = () => {
   const [socket, setSocket] = useState(null);
