@@ -15,16 +15,17 @@ const theme = extendTheme({
       900: "#030617",
     },
     secondary: {
-      50: "#f9f9fb",
-      100: "#e4e7f0",
-      200: "#cad0dd",
-      300: "#afbac9",
-      400: "#95a4b7",
-      500: "#7a8fa5",
-      600: "#62738c",
-      700: "#495670",
-      800: "#313a55",
-      900: "#181f3b",
+      50: "#f2eaff",
+      100: "#d4b6ff",
+      200: "#b488ff",
+      300: "#9761ff",
+      400: "#7a3dff",
+      500: "#5d17ff",
+      600: "#4d00cc",
+      700: "#3d0099",
+      800: "#2d0066",
+      900: "#1e0033",
+      neonPurple: "#aa00ff",
     },
   },
   components: {
@@ -40,6 +41,9 @@ const theme = extendTheme({
           _hover: {
             bg: "brand.600",
           },
+          _active: {
+            bg: "brand.700",
+          },
         },
         secondary: {
           bg: "secondary.500",
@@ -47,17 +51,40 @@ const theme = extendTheme({
           _hover: {
             bg: "secondary.600",
           },
+          _active: {
+            bg: "secondary.700",
+          },
         },
       },
     },
     Heading: {
       baseStyle: {
         fontWeight: "bold",
+        textTransform: "uppercase",
+      },
+      variants: {
+        primary: {
+          color: "brand.500",
+        },
+        secondary: {
+          color: "secondary.500",
+        },
       },
     },
     ListItem: {
       baseStyle: {
         cursor: "pointer",
+        _hover: {
+          bg: "gray.100",
+        },
+      },
+    },
+  },
+  styles: {
+    global: {
+      body: {
+        bg: "brand.50",
+        color: "brand.900",
       },
     },
   },
