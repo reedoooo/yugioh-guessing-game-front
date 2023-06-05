@@ -17,6 +17,7 @@ const eventPool = {
   PLAYER_TURN: 'playerTurn',
   GAME_OVER: 'gameOver',
   PLAYER_LEAVE: 'playerLeave',
+  START_NEW_GAME: 'startNewGame',
 };
 
 const Game = () => {
@@ -50,6 +51,12 @@ const Game = () => {
     newSocket.on(eventPool.PLAYER_LEAVE, updatedPlayers => {
       setPlayers(updatedPlayers);
     });
+
+    newSocket.on(eventPool.PLAYER_TURN, payload => {
+        console.log(payload);
+        setTurnId(payload.turnId);
+        // You can add more code here to handle other properties of payload
+      });      
 
     newSocket.on(eventPool.UPDATE_PLAYER, updatedPlayer => {
       setPlayers(prevPlayers =>
@@ -96,6 +103,11 @@ const Game = () => {
     }
   };
 
+  const handleStartNewGame = () => {
+    socket.emit(eventPool.START_NEW_GAME);
+    window.location.reload();
+  };
+
   const handleGuessLetter = letter => {
     socket.emit(eventPool.PLAYER_GUESS, letter);
   };
@@ -113,27 +125,35 @@ const Game = () => {
           boxShadow="lg"
           bg="white"
         >
+          <PlayerScores 
+          players={players} 
+            winners={winners}
+            highscore={highscore}
+            onNewGame={handleStartNewGame} // Add onNewGame prop
+          />
           {gameOver ? (
-            <GameOver winners={winners} highscore={highscore} />
+            <GameOver
+              winners={winners}
+              highscore={highscore}
+              onNewGame={handleStartNewGame} // Add onNewGame prop
+            />
           ) : (
-            <>
-              <PlayerScores players={players} />
-              <GameInterface
-                gameOver={gameOver}
-                winners={winners}
-                highscore={highscore}
-                revealedWord={revealedWord}
-                setPlayerName={setPlayerName}
-                playerName={playerName}
-                handleJoinGame={handleJoinGame}
-                handleLeaveGame={handleLeaveGame}
-                handleGuessLetter={handleGuessLetter}
-                players={players}
-                selectedPlayer={selectedPlayer}
-                setSelectedPlayer={setSelectedPlayer}
-                turnId={turnId}
-              />
-            </>
+            <GameInterface
+              gameOver={gameOver}
+              onNewGame={handleStartNewGame}
+              winners={winners}
+              highscore={highscore}
+              revealedWord={revealedWord}
+              setPlayerName={setPlayerName}
+              playerName={playerName}
+              handleJoinGame={handleJoinGame}
+              handleLeaveGame={handleLeaveGame}
+              handleGuessLetter={handleGuessLetter}
+              players={players}
+              selectedPlayer={selectedPlayer}
+              setSelectedPlayer={setSelectedPlayer}
+              turnId={turnId}
+            />
           )}
         </VStack>
       </Grid>

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Box, Button, Heading, Input, List, ListItem, Grid } from '@chakra-ui/react';
 
-const GameInterface = ({ gameOver, winners, highscore, revealedWord, playerName, setPlayerName, handleJoinGame, handleLeaveGame, handleGuessLetter, players, selectedPlayer, setSelectedPlayer, turnId }) => {
+const GameInterface = ({ gameOver, winners, highscore, revealedWord, playerName, setPlayerName, handleJoinGame, handleLeaveGame, handleGuessLetter, players, selectedPlayer, setSelectedPlayer, turnId, onNewGame }) => {
+  const handleNewGame = () => {
+    onNewGame(); // Invoke the onNewGame function when the new game button is clicked
+  };
+
   return (
     <Box>
       <Heading as="h1" mb={4} color="brand.900">
@@ -123,6 +127,9 @@ const GameInterface = ({ gameOver, winners, highscore, revealedWord, playerName,
           <Heading as="h4" mb={2} color="brand.700">
             Highscore: {highscore}
           </Heading>
+          <Button colorScheme="brand" onClick={handleNewGame}>
+            New Game
+          </Button>
         </Box>
       )}
     </Box>

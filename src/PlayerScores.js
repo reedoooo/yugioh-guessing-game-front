@@ -1,7 +1,11 @@
 import React from 'react';
-import { Box, Text, VStack } from '@chakra-ui/react';
+import { Box, Text, VStack, Button } from '@chakra-ui/react';
 
-const PlayerScores = ({ players }) => {
+const PlayerScores = ({ players, onNewGame }) => {
+  const handleNewGame = () => {
+    onNewGame(); // Invoke the onNewGame function when the new game button is clicked
+  };
+
   return (
     <Box>
       <Text fontSize="xl" fontWeight="bold" mb={2}>
@@ -15,6 +19,9 @@ const PlayerScores = ({ players }) => {
           </Box>
         ))}
       </VStack>
+      <Button colorScheme="brand" mt={4} onClick={handleNewGame}>
+        New Game
+      </Button>
     </Box>
   );
 };
