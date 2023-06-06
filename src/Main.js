@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Center,
   Grid,
@@ -111,34 +111,40 @@ const Game = () => {
 
     newSocket.on(eventPool.PLAYER_GUESS, (message) => {
       console.log(message);
-      
+
       // Assume the `message` is in this format: { winners: [...], highscore: ... }
-      if(message.winners) {
+      if (message.winners) {
         setWinners(message.winners);
         setHighscore(message.highscore);
         setGameOver(true);
       }
     });
-    
 
     newSocket.on(eventPool.PLAYER_SCORE, (payload) => {
       console.log(payload);
     });
 
-// Add check for unexpected payload structure
-newSocket.on(eventPool.GAME_OVER, (payload) => {
-  if (!payload || !payload.winners || typeof payload.highscore === 'undefined') {
-    console.error("Unexpected GAME_OVER payload:", payload);
-    return;
-  }
+    // Add check for unexpected payload structure
+    newSocket.on(eventPool.GAME_OVER, (payload) => {
+      if (
+        !payload ||
+        !payload.winners ||
+        typeof payload.highscore === "undefined"
+      ) {
+        console.error("Unexpected GAME_OVER payload:", payload);
+        return;
+      }
 
-  console.log("GameOver event received with data: ", payload.winners, payload.highscore);
-  setGameOver(true);
-  setWinners(payload.winners);
-  console.log("Winners: ", winners);
-  setHighscore(payload.highscore);
-});
-    
+      console.log(
+        "GameOver event received with data: ",
+        payload.winners,
+        payload.highscore
+      );
+      setGameOver(true);
+      setWinners(payload.winners);
+      console.log("Winners: ", winners);
+      setHighscore(payload.highscore);
+    });
 
     return () => {
       newSocket.disconnect();
@@ -166,13 +172,10 @@ newSocket.on(eventPool.GAME_OVER, (payload) => {
 
   return (
     <ChakraProvider theme={theme}>
-      <Center 
-          bgGradient="linear(to-r, secondary.200, secondary.600)"
-      h="100vh"
-      >
+      <Center bgGradient="linear(to-r, secondary.200, secondary.600)" h="100vh">
         <Grid
           placeItems="center"
-          w='full'
+          w="full"
           h="full"
           p={10}
           bgGradient="linear(to-r, secondary.200, secondary.600)"
@@ -191,17 +194,13 @@ newSocket.on(eventPool.GAME_OVER, (payload) => {
               players={players}
               winners={winners}
               highscore={highscore}
-              onNewGame={handleStartNewGame} 
-              primaryColor="brand.500" 
-              secondaryColor="secondary.500" 
+              onNewGame={handleStartNewGame}
+              primaryColor="brand.500"
+              secondaryColor="secondary.500"
             />
+
             {gameOver ? (
-              <PlayerScores
-                players={players}
-                winners={winners}
-                highscore={highscore}
-                onNewGame={handleStartNewGame} 
-              />
+              <Fragment/>
             ) : (
               <GameInterface
                 gameOver={gameOver}

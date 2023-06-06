@@ -1,6 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Text, Grid, Button, ChakraProvider, extendTheme, Center, CSSReset, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
-import Confetti from './lib/Confetti';
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Text,
+  Grid,
+  Button,
+  ChakraProvider,
+  extendTheme,
+  Center,
+  CSSReset,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import Confetti from "./lib/Confetti";
 
 const theme = extendTheme({
   colors: {
@@ -42,8 +58,6 @@ const PlayerScores = ({ players, winners, highscore, onNewGame }) => {
       setWinningPlayer(winners[0].id);
     }
   }, [winners]);
-
-  
 
   const handleNewGame = () => {
     setWinningPlayer(null);
@@ -87,21 +101,31 @@ const PlayerScores = ({ players, winners, highscore, onNewGame }) => {
             opacity={0.3}
             borderRadius="xl"
             zIndex={0}
-            animation={winningPlayer ? 'glowAnimation 2s infinite' : 'none'}
+            animation={winningPlayer ? "glowAnimation 2s infinite" : "none"}
           />
           <Grid templateColumns={`repeat(${players.length}, 1fr)`} gap={2}>
             {players.slice(0, 4).map((player) => (
               <Grid
                 key={player.id}
                 templateColumns="1fr"
-                bg={player.id === winningPlayer ? 'secondary.500' : 'secondary.300'}
+                bg={
+                  player.id === winningPlayer
+                    ? "secondary.500"
+                    : "secondary.300"
+                }
                 p={2}
                 borderRadius="md"
                 color="brand.900"
                 onClick={() => handlePlayerWin(player.id)}
                 cursor="pointer"
-                boxShadow={player.id === winningPlayer ? '0 0 10px rgba(85, 23, 255, 0.5)' : 'none'}
-                transform={player.id === winningPlayer ? 'translateY(-3px)' : 'none'}
+                boxShadow={
+                  player.id === winningPlayer
+                    ? "0 0 10px rgba(85, 23, 255, 0.5)"
+                    : "none"
+                }
+                transform={
+                  player.id === winningPlayer ? "translateY(-3px)" : "none"
+                }
                 transition="transform 0.3s"
               >
                 <Text fontWeight="bold">{player.name}</Text>
@@ -122,12 +146,10 @@ const PlayerScores = ({ players, winners, highscore, onNewGame }) => {
           <ModalHeader>Game Over!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-  {showModal && (
-    <Confetti />
-  )}
-  <Text fontWeight="bold">{winners[0]?.name}</Text>
-  <Text>Score: {winners[0]?.score}</Text>
-</ModalBody>
+            {showModal && <Confetti />}
+            <Text fontWeight="bold">{winners[0]?.name}</Text>
+            <Text>Score: {winners[0]?.score}</Text>
+          </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="brand" onClick={handleNewGame}>
@@ -137,7 +159,7 @@ const PlayerScores = ({ players, winners, highscore, onNewGame }) => {
         </ModalContent>
       </Modal>
       <style>
-        { `@keyframes glowAnimation { 0% { box-shadow: 0 0 10px rgba(85, 23, 255, 0.5); } 50% { box-shadow: 0 0 20px rgba(85, 23, 255, 1); } 100% { box-shadow: 0 0 10px rgba(85, 23, 255, 0.5); } }` }
+        {`@keyframes glowAnimation { 0% { box-shadow: 0 0 10px rgba(85, 23, 255, 0.5); } 50% { box-shadow: 0 0 20px rgba(85, 23, 255, 1); } 100% { box-shadow: 0 0 10px rgba(85, 23, 255, 0.5); } }`}
       </style>
     </ChakraProvider>
   );
